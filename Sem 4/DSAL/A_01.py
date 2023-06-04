@@ -14,9 +14,14 @@ def hash_function_1(key_ele, m_size):
     h1 = key_ele % m_size
     return h1
 
-def hash_function_2(key_ele):
-    h2 = 1 + (key_ele % 11)
-    return h2
+def hash_function_2(key_ele,m_size):
+    for i in range(m):
+        h2 = (key_ele + i*i) % m_size
+        return h2
+
+# def hash_function_2(key_ele):
+#     h2 = 1 + (key_ele % 11)
+#     return h2
 
 def hashtable(ht):
     print(f"\nHash Value      \tKey")
