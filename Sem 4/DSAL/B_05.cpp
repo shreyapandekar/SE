@@ -1,4 +1,5 @@
-/*A book consists of chapters, chapters consists of sections and sections consist of subsections. Construct a tree and print the nodes. Find the time and space requirements of your method*/
+/*A book consists of chapters, chapters consists of sections and sections consist of subsections. Construct a tree and print the
+ nodes. Find the time and space requirements of your method*/
 #include <iostream>
 #include <string.h>
 using namespace std;
@@ -42,6 +43,15 @@ void Book::create()
             root->child[i]->child[j] = new node;
             cout << "Enter Section: " << j + 1 << " \n";
             cin >> root->child[i]->child[j]->caption;
+            cout<<"Enter Sub section: "<<endl;
+            cin>>root->child[i]->child[j]->count;
+            for ( k = 0; k < root->child[i]->child[j]->count; k++)
+            {
+                root->child[i]->child[j]->child[k] = new node;
+                cout << "Enter Section: " << k + 1 << "name \n";
+                cin >> root->child[i]->child[j]->child[k]->caption;
+            }
+            
         }
     }
 }
@@ -65,6 +75,10 @@ void Book::display(node *r1)
             {
 
                 cout << "\n  " << r1->child[i]->child[j]->caption;
+                for (k = 0; k < r1->child[i]->child[j]->count; k++)
+                {
+                    cout << "\n  subsection" << r1->child[i]->child[j]->child[k]->caption;
+                }
             }
         }
     }
@@ -80,20 +94,25 @@ int main()
         cout << "Book Tree Creation" << endl;
         cout << "1.Create" << endl;
         cout << "2.Display" << endl;
-        cout << "3.Quit" << endl;
         cout << "Enter your choice : ";
         cin >> choice;
         switch (choice)
         {
         case 1:
             b.create();
+            break;
         case 2:
             b.display(root);
             break;
-        case 3:
-            exit(1);
+        
         default:
             cout << "Wrong choice" << endl;
+            break;
         }
     }
+    return 0;
 }
+
+
+
+
