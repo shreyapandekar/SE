@@ -1,58 +1,54 @@
-"Consider telephone book database of N clients. Make use of a hash table implementation to quickly look up client's telephone number. Make use of two collision handling techniques , compare them using number of comparisons required to find a set of telephone numbers"
-
-def tele_database():
-    phone_data = []
-    n = int(input("Enter Number of Clients :- "))
-    print("Enter Phone Numbers --\n")
+def telephone():
+    phone_data=[]
+    n=int(input("Enter number of clients:"))
+    print("Enter phone number:")
     for i in range(n):
-        x = int(input("--> "))
+        x=int(input("->"))
         phone_data.append(x)
-
     return phone_data
 
-def hash_function_1(key_ele, m_size):
-    h1 = key_ele % m_size
+
+def hashfunction1(key,size):
+    h1=key%size
     return h1
 
-def hash_function_2(key_ele,m_size):
+
+def hashfunction2(key,size):
     for i in range(m):
-        h2 = (key_ele + i*i) % m_size
+        h2=(key+i*i)%m
         return h2
 
-# def hash_function_2(key_ele):
-#     h2 = 1 + (key_ele % 11)
-#     return h2
 
 def hashtable(ht):
-    print(f"\nHash Value      \tKey")
+    print(f"\nHash Table    \tKey")
     for j in range(len(ht)):
-        if ht[j] != -1:
-            print(f"\n\t{j}  \t--->  \t{ht[j]}")
+        if ht[j]!=-1:
+            print(f"\n{j}   \t->    \t{ht[j]}")
         else:
-            print(f"\n\t{j}")
+            print(f"\n{j}")
 
-phone_database = tele_database()
-m = int(input("Enter Hash Table Size :- "))
-hash_table = [-1] * m
 
-opt = int(input("If collision occurs which collision resolution technique do you want to use?\n\t1. Linear Probing\n\t2.Quadratic probing :- "))
+phone_database=telephone()
+m=int(input("Enter size of hashtable:"))
+hash_table=[-1]*m
+
+opt=int(input("\nIf collision occurs choose any one collision technique:\n1.Linear Probing\n2.Quadratic Probing: "))
 
 for k in phone_database:
-    h_1 = hash_function_1(k, m)
-    h_2 = hash_function_2(k)
+    h1=hashfunction1(k,m)
+    h2=hashfunction2(k,m)
 
-    if hash_table[h_1] == -1:
-        hash_table[h_1] = k
+    if hash_table[h1]==-1:
+        hash_table[h1]=k
     else:
-        if opt == 1:
-            while hash_table[h_1] != -1:
-                h_1 += 1
-            hash_table[h_1] = k
-        elif opt == 2:
-            for j in range (len(hash_table)):
-                new_hash = (h_1 + j* j)%m
+        if opt==1:
+            while hash_table[h1]!=-1:
+                h1+=1
+            hash_table[h1]=k
+        elif opt==2:
+            for j in range(len(hash_table)):
+                new_hash=(h1+j*j)%m
                 if(hash_table[new_hash]==-1):
-                    hash_table[new_hash] = k
+                    hash_table[new_hash]=k
                     break
-
 hashtable(hash_table)
