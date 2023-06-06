@@ -14,7 +14,6 @@ struct node
 class tree
 {
     char prefix[20];
-
 public:
     node *top;
     void expression(char[]);
@@ -26,7 +25,6 @@ class stack1
 {
     node *data[30];
     int top;
-
 public:
     stack1()
     {
@@ -125,10 +123,7 @@ int main()
     cout <<"Enter prefix Expression : ";
     cin >> expr;
     cout << expr;
-    t.expression(expr);
-    //t.display(t.top);
-    //cout<<endl;
+    t.expression(expr); 
     t.non_rec_postorder(t.top);
     t.del(t.top);
-    // t.display(t.top);
 }
