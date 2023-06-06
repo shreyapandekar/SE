@@ -1,7 +1,14 @@
+/*Company maintains employee information as employee ID, name, 
+designation and salary.
+ Allow user to add, delete information of employee.
+Display information of particular employee.
+ If employee does not exist an appropriate message is displayed. 
+ If it is, then the system displays the employee details. 
+ Use index sequential file to maintain the data. */
+
 #include<iostream>
-#include<iomanip>
 #include<fstream>
-#include<cstring>
+#include<string.h>
 
 using namespace std;
 
@@ -29,6 +36,7 @@ class EMP_CLASS
   void Display();
   void Delete();
   void Append();
+  int search();
 };
 
 EMP_CLASS::EMP_CLASS()//constructor 
@@ -38,7 +46,7 @@ EMP_CLASS::EMP_CLASS()//constructor
 
 void EMP_CLASS::Create()
 {
- int i,j;
+ int i;
  char ch='y';
  fstream seqfile;
  fstream indexfile;
@@ -58,7 +66,7 @@ void EMP_CLASS::Create()
   Ind_Records.position=i;
   indexfile.write((char*)&Ind_Records,sizeof(Ind_Records));
   i++;
-  cout<<"\nDo you want to add more records?";
+  cout<<"\nDo you want to add more records?(y/n)";
   cin>>ch;
   }while(ch=='y');
   seqfile.close();
@@ -68,7 +76,7 @@ void EMP_CLASS::Display()
 {
  fstream seqfile;
  fstream indexfile;
- int n,i,j;
+ int i;
  seqfile.open("EMP.DAT",ios::in|ios::out|ios::binary);
  indexfile.open("IND.DAT",ios::in|ios::out|ios::binary);
  indexfile.seekg(0,ios::beg);
@@ -95,29 +103,51 @@ void EMP_CLASS::Display()
  seqfile.close();
  indexfile.close();
 }
+int EMP_CLASS::search(){
+    fstream seqfile;
+    fstream indexfile;
+    int offset;
+    indexfile.open("IND.DAT",ios::in|ios::binary);
+ 	seqfile.open("EMP.DAT",ios::in|ios::binary);
+    char id;
+    cout<<"\nenter id you want to search"<<endl;
+    cin>>id;
+ indexfile.seekg(0,ios::beg);
+    int pos=-1;
+    while(indexfile.read((char *)&Ind_Records,sizeof(Ind_Records))){
+        if(id==Ind_Records.emp_id){
+            cout<<"\nrecord found"<<endl;
+            pos=Ind_Records.position;
+             offset=pos*sizeof(Records);
+            seqfile.seekg(offset,ios::beg);
+            seqfile.read((char *)&Records,sizeof(Records));
+            cout<<"\n\t"<<Records.emp_id<<"\t"<<Records.name<<"\t"<<Records.salary;
+            break;
+        }
+        else{
+        cout<<"record not found";
+    }
+
+    }
+    return pos;
+            
+           
+            
+    seqfile.close();
+    indexfile.close();
+
+}
 void EMP_CLASS::Delete()
 {
- int id,pos;
+ int pos;
  cout<<"\n For deletion,";
- cout<<"\n Enter the Emp_ID for for searching ";
- cin>>id;
  fstream seqfile;
  fstream indexfile;
  seqfile.open("EMP.DAT",ios::in|ios::out|ios::binary);
  indexfile.open("IND.DAT",ios::in|ios::out|ios::binary);
  seqfile.seekg(0,ios::beg);
  indexfile.seekg(0,ios::beg);
- pos=-1;
- //reading index file for getting the index
- while(indexfile.read((char *)&Ind_Records,sizeof(Ind_Records)))
- {
-  if(id==Ind_Records.emp_id) //desired record is found
-  {
-   pos=Ind_Records.position;
-   Ind_Records.emp_id=-1;
-   break;
-  }
- }
+ pos=search();
  if(pos==-1)
  {
   cout<<"\n The record is not present in the file";
@@ -176,7 +206,7 @@ int main()
  int choice;
  do
  {
-  cout<<"\n***********Main Menu************"<<endl;
+  cout<<"\n**********Main Menu***********"<<endl;
   cout<<"\n 1.Create";
   cout<<"\n 2.Display";
   cout<<"\n 3.Delete";
@@ -195,9 +225,7 @@ int main()
   case 4:List.Append();
       break;
     }
- cout<<"\n\t Do you want to go back to Main Menu?";
- cin>>ans;
 
- }while(ans=='y');
+ }while(choice<=4);
 
 }
