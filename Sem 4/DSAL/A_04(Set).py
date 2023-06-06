@@ -23,6 +23,17 @@ def add( s, e ):
 def remove( s, e ):
         if e in s:
             s.remove(e)
+            
+def iterate(s):
+    iterator=iter(s)
+    for i in range (len(s)):
+        print(next(iterator))
+        
+def size(s):
+    count=0
+    for i in (s):
+        count=count+1
+    print("\n Size of set A",count)
 
 def intersect( s1, s2 ):
         newSet = []
@@ -106,6 +117,9 @@ while choice != 10:
 
     elif choice==4:
         print("Set Contains {} elements".format(len(s1),"\n"))
+        size(s1)
+        iterate(s1)
+        
 
 
     elif choice==5:
