@@ -140,7 +140,7 @@ int main()
     studentclass sc;
     int ch;
     do{
-    cout<<"enter your choice \n1.Add\n2.delete\n3.search\n4.append"<<endl;
+    cout<<"enter your choice \n1.Create\n2.delete\n3.search\n4.append"<<endl;
     cin>>ch;
     switch(ch){
 
